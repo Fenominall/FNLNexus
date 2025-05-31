@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+public protocol FNLRequestBuildable: Sendable {
+    func buildURLRequest(from endpoint: FNLEndpoint) -> URLRequest?
+}
