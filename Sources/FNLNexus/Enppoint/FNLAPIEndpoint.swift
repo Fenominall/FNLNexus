@@ -7,6 +7,25 @@
 
 import Foundation
 
+/// A concrete implementation of `FNLEndpoint` representing a standard API request definition.
+///
+/// `FNLAPIEndpoint` encapsulates all the necessary components required to build a complete
+/// `URLRequest`, including HTTP method, headers, URL components, request body, and query parameters.
+///
+/// Use this type to define endpoints in a type-safe, decoupled manner across your networking layer.
+///
+/// Example usage:
+/// ```
+/// let endpoint = FNLAPIEndpoint(
+///     method: .get,
+///     scheme: .https,
+///     host: "api.example.com",
+///     path: "/users",
+///     params: [URLQueryItem(name: "page", value: "1")]
+/// )
+/// ```
+///
+/// This type is particularly useful when paired with a `FNLRequestBuilder` to transform
 public struct FNLAPIEndpoint: FNLEndpoint {
     public var method: FNLRequestMethod
     public var headers: Header?
