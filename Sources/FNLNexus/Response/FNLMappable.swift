@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol FNLMappable {
-    associatedtype Input: Decodable & Sendable
+    associatedtype Input: Codable & Sendable
     associatedtype Output
     
     func map(_ input: Input) async throws -> Output
