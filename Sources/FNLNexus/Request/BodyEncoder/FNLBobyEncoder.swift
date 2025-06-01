@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol that defines an abstraction for encoding body parameters into `Data` and determining appropriate `Content-Type` headers.
-public protocol BodyEncoder: Sendable {
+public protocol FNLBodyEncoder: Sendable {
     
     /// Encodes a given `FNLBodyParameter` into a `Data` object suitable for transmission in an HTTP request.
     ///
@@ -25,7 +25,7 @@ public protocol BodyEncoder: Sendable {
 }
 
 /// A concrete implementation of `BodyEncoder` that supports JSON-based encoding using `JSONEncoder`.
-public struct JSONBodyEncoder: BodyEncoder {
+public struct FNLJSONBodyEncoder: FNLBodyEncoder {
     
     public init() {}
 
