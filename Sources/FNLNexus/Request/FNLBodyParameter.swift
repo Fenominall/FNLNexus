@@ -17,7 +17,7 @@ public enum FNLBodyParameter: Sendable {
     case data(Data)
     
     /// An `Encodable` type wrapped in `AnyEncodable` for type-erased encoding.
-    case encodable(AnyEncodable)
+    case encodable(AnyEncodable, encoder: JSONEncoder = .init())
     
     /// A JSON dictionary payload where values are typed as `CodableValue`.
     case jsonDictionary([String: CodableValue])
