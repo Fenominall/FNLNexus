@@ -11,7 +11,7 @@ import Foundation
 ///
 /// This enum defines standard HTTP methods commonly used
 /// to specify the desired action to be performed on the resource.
-public enum FNLRequestMethod: String {
+public enum FNLRequestMethod: String, Sendable {
     /// The HTTP DELETE method, used to delete a resource.
     case delete = "DELETE"
     
