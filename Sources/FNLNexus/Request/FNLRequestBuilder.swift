@@ -27,7 +27,10 @@ public struct FNLRequestBuilder: FNLRequestBuildable {
     public func buildURLRequest(from endpoint: FNLEndpoint) -> URLRequest? {
         var components = URLComponents()
         components.scheme = endpoint.scheme.rawValue
+        
+        guard !endpoint.host.isEmpty else { return nil }
         components.host = endpoint.host
+        
         components.path = endpoint.path
         components.queryItems = endpoint.params
 
