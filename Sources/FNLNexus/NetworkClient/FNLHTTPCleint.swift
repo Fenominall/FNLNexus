@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-public typealias FNLHTTPCleint = FNLAsyncHTTPClient & FNLCombineHTTPClient
+public protocol FNLHTTPCleint: FNLAsyncHTTPClient & FNLCombineHTTPClient {}
 
 /// A protocol that defines an abstraction for sending asynchronous HTTP requests using async/await.
 ///
