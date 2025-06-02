@@ -7,9 +7,10 @@
 
 import Foundation
 
-public enum CircuitBreakerError: Error, Equatable {
+public enum FNLCircuitBreakerError: Error, Equatable {
     case isOpen
     case operationFailedInHalfOpen(underlyingError: Error)
+    case negativeValues
     
     public var localizedDescription: String {
         switch self {
@@ -17,10 +18,12 @@ public enum CircuitBreakerError: Error, Equatable {
             return "Circuit Breaker is Open. Requests are currently being rejected."
         case .operationFailedInHalfOpen(let error):
             return "Test request failed in Half-Open state. Underlying error: \(error.localizedDescription)"
+        case .negativeValues:
+            return "CircuitBreaker thresholds and timeout must be positive."
         }
     }
     
-    public static func == (lhs: CircuitBreakerError, rhs: CircuitBreakerError) -> Bool {
+    public static func == (lhs: FNLCircuitBreakerError, rhs: FNLCircuitBreakerError) -> Bool {
         switch (lhs, rhs) {
         case (.isOpen, .isOpen):
             return true

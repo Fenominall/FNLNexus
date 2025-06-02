@@ -13,7 +13,7 @@ public actor FNLCircuitBreaker {
         case closed
         case open
         case halfOpen
-
+        
         public var description: String {
             switch self {
             case .closed: return "Closed"
@@ -22,7 +22,7 @@ public actor FNLCircuitBreaker {
             }
         }
     }
-
+    
     // MARK: - Configuration
     public let failureThreshold: Int
     public let recoveryTimeout: TimeInterval
@@ -33,21 +33,21 @@ public actor FNLCircuitBreaker {
     private var consecutiveFailures: Int = 0
     private var lastFailureTime: Date? = nil
     private var successfulHalfOpenAttempts: Int = 0
-
+    
     // MARK: - Initialization
     public init(
         failureThreshold: Int = 3,
         recoveryTimeout: TimeInterval = 30.0,
         halfOpenSuccessThreshold: Int = 1
-    ) {
+    ) throws {
         guard failureThreshold > 0, recoveryTimeout > 0, halfOpenSuccessThreshold > 0 else {
-            fatalError("CircuitBreaker thresholds and timeout must be positive.")
+            throw FNLCircuitBreakerError.negativeValues
         }
         self.failureThreshold = failureThreshold
         self.recoveryTimeout = recoveryTimeout
         self.halfOpenSuccessThreshold = halfOpenSuccessThreshold
     }
-
+    
     // MARK: - Core Logic: Performing the Request
     /// Executes the given asynchronous operation, applying circuit breaker logic.
     /// - Parameter operation: The async throwing closure representing the actual work (e.g., network call).
@@ -66,7 +66,7 @@ public actor FNLCircuitBreaker {
                 recordFailure()
                 throw error // Propagate the original error
             }
-
+            
         case .open:
             if let lastFailure = lastFailureTime, Date().timeIntervalSince(lastFailure) > recoveryTimeout {
                 print("CircuitBreaker: Timeout elapsed. Moving to Half-Open.")
@@ -75,9 +75,9 @@ public actor FNLCircuitBreaker {
                 return try await performRequest(operation)
             } else {
                 print("CircuitBreaker: Circuit is Open. Rejecting request.")
-                throw CircuitBreakerError.isOpen
+                throw FNLCircuitBreakerError.isOpen
             }
-
+            
         case .halfOpen:
             print("CircuitBreaker: State is Half-Open. Attempting test request...")
             do {
@@ -87,13 +87,13 @@ public actor FNLCircuitBreaker {
             } catch {
                 print("CircuitBreaker: Test request failed in Half-Open state. Re-opening circuit.")
                 recordFailure() // This will transition back to Open
-                throw CircuitBreakerError.operationFailedInHalfOpen(underlyingError: error)
+                throw FNLCircuitBreakerError.operationFailedInHalfOpen(underlyingError: error)
             }
         }
     }
-
+    
     // MARK: - State Transition Helpers (Private)
-
+    
     private func recordSuccess() {
         // When successful in Closed state, reset failure count.
         // When successful in Half-Open, successfulHalfOpenAttempts is incremented, and might transition to Closed.
@@ -105,7 +105,7 @@ public actor FNLCircuitBreaker {
         }
         // If coming from HalfOpen, `recordHalfOpenSuccess` is called directly by `performRequest`.
     }
-
+    
     private func recordHalfOpenSuccess() {
         guard state == .halfOpen else { return } // Ensure we are actually in half-open
         successfulHalfOpenAttempts += 1
@@ -115,11 +115,11 @@ public actor FNLCircuitBreaker {
             transition(to: .closed)
         }
     }
-
+    
     private func recordFailure() {
         consecutiveFailures += 1
         lastFailureTime = Date()
-
+        
         if state == .halfOpen {
             // Failure in Half-Open immediately transitions back to Open
             print("CircuitBreaker: Failure recorded in Half-Open state. Moving to Open.")
@@ -133,7 +133,7 @@ public actor FNLCircuitBreaker {
         }
         // If state is already Open, recording another failure just updates the lastFailureTime (implicitly handled by setting it above)
     }
-
+    
     private func transition(to newState: State) {
         print("CircuitBreaker: Transitioning from \(state) to \(newState)")
         state = newState
