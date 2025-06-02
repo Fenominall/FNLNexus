@@ -8,11 +8,13 @@
 import Foundation
 import Combine
 
+public typealias FNLHTTPCleint = FNLAsyncHTTPClient & FNLCombineHTTPClient
+
 /// A protocol that defines an abstraction for sending asynchronous HTTP requests using async/await.
 ///
 /// Implementers of this protocol provide mechanisms to perform network requests
 /// and optionally decode the response into strongly typed models.
-public protocol FNLHTTPClient: Sendable {
+public protocol FNLAsyncHTTPClient: Sendable {
     
     /// Sends an HTTP request using the provided endpoint configuration and returns the raw response.
     ///
@@ -59,7 +61,7 @@ public protocol FNLCombineHTTPClient: Sendable {
 
 /// An extension providing a convenient method for `FNLHTTPClient` to handle mapping logic
 /// using a provided mapper conforming to `FNLMappable`.
-public extension FNLHTTPClient {
+public extension FNLAsyncHTTPClient {
     
     /// Sends a request and applies a custom mapper to transform the decoded response.
     ///
