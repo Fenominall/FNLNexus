@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 /// A default implementation of `FNLHTTPClient` that uses `URLSession` to perform HTTP requests.
 ///
@@ -42,8 +43,7 @@ public final class FNLDefaultHTTPClient {
 
 // MARK: - FNLHTTPClient
 
-extension FNLDefaultHTTPClient: FNLHTTPClient {
-    
+extension FNLDefaultHTTPClient: FNLHTTPCleint {
     /// Sends a raw HTTP request using the provided endpoint.
     ///
     /// - Parameter endpoint: The endpoint that defines the request.
@@ -88,10 +88,34 @@ extension FNLDefaultHTTPClient: FNLHTTPClient {
             throw handleError(error)
         }
     }
-}
-
-extension FNLDefaultHTTPClient: FNLCombineHTTPClient {
     
+    /// Sends a raw HTTP request using Combine and returns the response data.
+    ///
+    /// This is a convenience method for when you only need the raw `Data` response
+    /// without decoding it into a model.
+    ///
+    /// - Parameter endpoint: The endpoint describing the request to perform.
+    /// - Returns: A publisher that emits the raw `Data` or a `FNLRequestError`.
+    public func sendRequest(from endpoint: any FNLEndpoint) -> AnyPublisher<Data, FNLRequestError> {
+        performCombineRequest(for: endpoint) { $0 }
+    }
+    
+    
+    /// Sends a typed HTTP request using Combine and decodes the response into the specified `Codable` type.
+    ///
+    /// - Parameters:
+    ///   - endpoint: The endpoint describing the request to perform.
+    ///   - responseType: The expected `Codable` type to decode the response into.
+    /// - Returns: A publisher that emits the decoded object or a `FNLRequestError`.
+    public func sendRequest<T: Codable & Sendable>(
+        from endpoint: any FNLEndpoint,
+        withResponseType responseType: T.Type
+    ) -> AnyPublisher<T, FNLRequestError> {
+        performCombineRequest(for: endpoint) { [weak self] data in
+            guard let self else { throw FNLRequestError.unknown("Self deallocated") }
+            return try self.decodeData(responseType, from: data)
+        }
+    }
 }
 
 // MARK: - Helpers
@@ -169,6 +193,36 @@ extension FNLDefaultHTTPClient {
             return .lostConnection
         default:
             return .unknown(error.localizedDescription)
+        }
+    }
+    
+    /// Performs a Combine-based HTTP request with customizable data transformation.
+    ///
+    /// This method abstracts the common request, validation, and transformation logic.
+    /// It supports both raw data and decoded model use cases.
+    ///
+    /// - Parameters:
+    ///   - endpoint: The `FNLEndpoint` representing the request.
+    ///   - transform: A closure that maps the received `Data` to the expected return type `T`.
+    /// - Returns: A publisher that emits either a transformed result of type `T` or a `FNLRequestError`.
+    private func performCombineRequest<T>(
+        for endpoint: FNLEndpoint,
+        trasform: @escaping (Data) throws -> T
+    ) -> AnyPublisher<T, FNLRequestError> {
+        do {
+            let request = try buildRequest(from: endpoint)
+            return session.dataTaskPublisher(for: request)
+                .tryMap { [weak self] data, response in
+                    guard let self else { throw FNLRequestError.unknown("Self deallocated") }
+                    _ = try self.validateResponse(response)
+                    return try trasform(data)
+                }
+                .mapError { [weak self] in
+                    self?.handleError($0) ?? .unknown($0.localizedDescription)
+                }
+                .eraseToAnyPublisher()
+        } catch {
+            return Fail(error: handleError(error)).eraseToAnyPublisher()
         }
     }
 }
