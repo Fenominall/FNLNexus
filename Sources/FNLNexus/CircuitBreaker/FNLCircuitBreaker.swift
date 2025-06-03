@@ -9,7 +9,7 @@ import Foundation
 
 public actor FNLCircuitBreaker {
     // MARK: - State Definition
-    public enum State: CustomStringConvertible {
+    public enum State: CustomStringConvertible, Sendable {
         case closed
         case open
         case halfOpen
