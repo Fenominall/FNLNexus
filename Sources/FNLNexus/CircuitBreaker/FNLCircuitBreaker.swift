@@ -30,9 +30,9 @@ public actor FNLCircuitBreaker {
     
     // MARK: - Internal State (Protected by Actor)
     public private(set) var state: State = .closed
-    private var consecutiveFailures: Int = 0
-    private var lastFailureTime: Date? = nil
-    private var successfulHalfOpenAttempts: Int = 0
+    private(set) var consecutiveFailures: Int = 0
+    private(set) var lastFailureTime: Date? = nil
+    private(set) var successfulHalfOpenAttempts: Int = 0
     
     // MARK: - Initialization
     public init(
