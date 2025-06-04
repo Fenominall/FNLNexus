@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Metadata for traditional offset-based pagination.
 public struct FNLOffsetPaginationMetadata: FNLPaginationMetadata {
     public let currentOffset: Int
     public let limit: Int
@@ -24,3 +25,4 @@ public struct FNLOffsetPaginationMetadata: FNLPaginationMetadata {
         ]
     }
 }
+

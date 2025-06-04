@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct KeysetPaginationMetadata: FNLPaginationMetadata {
+/// Metadata for keyset-based pagination using an `after_id` marker.
+public struct FNLKeysetPaginationMetadata: FNLPaginationMetadata {
     public let lastSeenId: String?
     public let hasMore: Bool
 

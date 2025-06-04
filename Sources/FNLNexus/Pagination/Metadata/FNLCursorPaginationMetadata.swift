@@ -7,9 +7,10 @@
 
 import Foundation
 
+/// Metadata for cursor-based pagination using a cursor token.
 public struct FNLCursorPaginationMetadata: FNLPaginationMetadata {
     public let nextCursor: String?
-    
+
     public var hasMorePages: Bool {
         return nextCursor != nil
     }
