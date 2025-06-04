@@ -1,0 +1,33 @@
+{
+  "configurations" : [
+    {
+      "id" : "A819B94F-5FEB-4A1F-AE6B-98905BBADF02",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "FNLNexus",
+          "name" : "FNLNexus"
+        }
+      ]
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "FNLNexusTests",
+        "name" : "FNLNexusTests"
+      }
+    }
+  ],
+  "version" : 1
+}
