@@ -13,7 +13,7 @@ extension XCTestCase {
         _ instance: AnyObject,
         file: StaticString = #filePath,
         line: UInt = #line
-    ) async {
+    ) {
         let weakObject = WeakTestRef(instance)
         
         XCTAssertNil(
