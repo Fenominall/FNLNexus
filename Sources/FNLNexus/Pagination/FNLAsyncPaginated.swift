@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  FNLAsyncPaginated.swift
 //  FNLNexus
 //
 //  Created by Fenominall on 6/3/25.
@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Holds a paginated result, including metadata and a loadMore closure.
 public struct FNLAsyncPaginated<Item> {
     // Holds the current page of data
     public let items: [Item]
