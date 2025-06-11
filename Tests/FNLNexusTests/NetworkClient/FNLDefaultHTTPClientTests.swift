@@ -17,7 +17,6 @@ final class FNLDefaultHTTPClientTests: XCTestCase {
         await URLProtocolStub.removeStub()
     }
     
-    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #filePath,
                          line: UInt = #line) -> FNLHTTPCleint {
