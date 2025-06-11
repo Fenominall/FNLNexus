@@ -8,12 +8,12 @@
 import Foundation
 import Combine
 
-/// A default implementation of `FNLHTTPClient` that uses `URLSession` to perform HTTP requests.
+/// A default implementation of `FNLHTTPClient` that uses `URLSession` to perform HTTP requests, it`s being used from the exntension providing a default implemtantion so there is no need to make it public.
 ///
 /// This client is built to work with a custom `FNLRequestBuildable` request builder
 /// and a `FNLDataDecoder` for decoding responses. It supports raw response fetching
 /// and strongly typed decoding using Swift's `Codable`.
-public final class FNLDefaultHTTPClient {
+final class FNLDefaultHTTPClient {
     
     /// The URL session used to perform network requests.
     public let session: URLSession
