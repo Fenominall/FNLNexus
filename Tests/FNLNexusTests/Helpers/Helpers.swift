@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FNLNexus
 
 func anyData() -> Data {
     return Data("any data".utf8)
@@ -17,6 +18,10 @@ func anyNSError() -> NSError {
 
 func anyURL() -> URL {
     return URL(string: "http://a-url.com")!
+}
+
+func anyEndpoint() -> FNLEndpoint {
+    return MockEndpoint()
 }
 
 func anyHTTPURLResponse() -> HTTPURLResponse {
