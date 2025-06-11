@@ -32,7 +32,7 @@ public final class FNLDefaultHTTPClient {
     ///   - decoder: A `FNLDataDecoder` used to decode the response data. Defaults to `JSONDecoder()`.
     public init(
         session: URLSession = .shared,
-        requestBuilder: FNLRequestBuildable,
+        requestBuilder: FNLRequestBuildable = FNLRequestBuilder(),
         decoder: FNLDataDecoder = JSONDecoder()
     ) {
         self.session = session
