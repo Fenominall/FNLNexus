@@ -36,6 +36,30 @@ public protocol FNLAsyncHTTPClient: Sendable {
     ) async throws -> T
 }
 
+public extension FNLAsyncHTTPClient where Self: FNLHTTPCleint {
+    /// Sends an HTTP request using the provided endpoint configuration and returns the raw response.
+    ///
+    /// __**The current implementation uses the FNLDefaultHTTPClient, if you want your own you need to implement the method.**__
+    func sendRequest(_ endpoint: FNLEndpoint) async throws -> FNLRawResponse {
+        return try await FNLDefaultHTTPClient()
+            .sendRequest(endpoint)
+    }
+    
+    /// Sends an HTTP request and decodes the response into a specified `Codable` type.
+    ///
+    /// The current implementation uses the FNLDefaultHTTPClient, if you want your own you need to implement the method.
+    func sendRequest<T: Codable & Sendable>(
+        from endpoint: FNLEndpoint,
+        withResponseType responseType: T.Type
+    ) async throws -> T {
+        return try await FNLDefaultHTTPClient()
+            .sendRequest(
+                from: endpoint,
+                withResponseType: responseType
+            )
+    }
+}
+
 /// A protocol defining an HTTP client that supports Combine-based request execution.
 ///
 /// This is an alternative interface to `FNLHTTPClient` for use in reactive programming scenarios.
@@ -59,6 +83,25 @@ public protocol FNLCombineHTTPClient: Sendable {
     ) -> AnyPublisher<T, FNLRequestError>
 }
 
+public extension FNLCombineHTTPClient where Self: FNLHTTPCleint {
+    /// Sends an HTTP request and returns a publisher that emits the raw `Data` or a `FNLRequestError`.
+    ///
+    /// The current implementation uses the FNLDefaultHTTPClient, if you want your own you need to implement the method.
+    func sendRequest(from endpoint: FNLEndpoint) -> AnyPublisher<Data, FNLRequestError> {
+        return FNLDefaultHTTPClient().sendRequest(from: endpoint)
+    }
+
+    /// Sends an HTTP request and returns a publisher that decodes the response into a specified type.
+    ///
+    /// The current implementation uses the FNLDefaultHTTPClient, if you want your own you need to implement the method.
+    func sendRequest<T: Codable & Sendable>(
+        from endpoint: FNLEndpoint,
+        withResponseType responseType: T.Type
+    ) -> AnyPublisher<T, FNLRequestError> {
+        return FNLDefaultHTTPClient().sendRequest(from: endpoint, withResponseType: responseType)
+    }
+}
+
 /// An extension providing a convenient method for `FNLHTTPClient` to handle mapping logic
 /// using a provided mapper conforming to `FNLMappable`.
 public extension FNLAsyncHTTPClient {
@@ -74,7 +117,10 @@ public extension FNLAsyncHTTPClient {
         from endpoint: FNLEndpoint,
         mapper: M
     ) async throws -> M.Output {
-        let decoded: M.Input = try await sendRequest(from: endpoint, withResponseType: M.Input.self)
+        let decoded: M.Input = try await sendRequest(
+            from: endpoint,
+            withResponseType: M.Input.self
+        )
         return try await mapper.map(decoded)
     }
 }
