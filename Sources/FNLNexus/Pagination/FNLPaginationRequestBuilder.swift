@@ -18,7 +18,7 @@ public struct FNLPaginatedRequestBuilder {
         var nextItems = baseEndpoint.params ?? []
         if let next = metadata.nextQueryItems() {
             for item in next where !nextItems.contains(where: { $0.name == item.name }) {
-                nextItems.append(contentsOf: next)
+                nextItems.append(item)
             }
         }
         
