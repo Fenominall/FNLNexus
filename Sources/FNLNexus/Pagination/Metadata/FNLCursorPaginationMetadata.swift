@@ -11,6 +11,10 @@ import Foundation
 public struct FNLCursorPaginationMetadata: FNLPaginationMetadata {
     public let nextCursor: String?
 
+    public init(nextCursor: String?) {
+        self.nextCursor = nextCursor
+    }
+    
     public var hasMorePages: Bool {
         return nextCursor != nil
     }

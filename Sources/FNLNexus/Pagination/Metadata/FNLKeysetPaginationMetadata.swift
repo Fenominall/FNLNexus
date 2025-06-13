@@ -12,6 +12,11 @@ public struct FNLKeysetPaginationMetadata: FNLPaginationMetadata {
     public let lastSeenId: String?
     public let hasMore: Bool
 
+    public init(lastSeenId: String? = nil, hasMore: Bool) {
+        self.lastSeenId = lastSeenId
+        self.hasMore = hasMore
+    }
+    
     public var hasMorePages: Bool {
         return hasMore
     }
