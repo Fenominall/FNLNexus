@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Foundation
 
 /// A structure representing a raw HTTP response, including the response data,
 /// the associated URL response, and the original URL request.
