@@ -36,9 +36,9 @@ public struct FNLAPIEndpoint: FNLEndpoint {
     public var params: [URLQueryItem]?
     
     public init(
-        method: FNLRequestMethod,
+        method: FNLRequestMethod = .get,
         headers: Header? = nil,
-        scheme: FNLScheme,
+        scheme: FNLScheme = .https,
         host: String,
         path: String,
         body: FNLBodyParameter? = nil,
