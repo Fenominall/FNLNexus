@@ -49,6 +49,9 @@ public enum FNLRequestError: Error, CustomDebugStringConvertible, Equatable {
 
     /// unknown error with message
     case unknown(String)
+    
+    /// Invalid metadata for paginated request was provided
+    case invalidMetadata
 
     init(fromHttpStatusCode code: Int) {
         switch code {
@@ -101,6 +104,8 @@ public enum FNLRequestError: Error, CustomDebugStringConvertible, Equatable {
             return "Response is empty"
         case .unknown(let message):
             return "Unknown error: \(message)"
+        case .invalidMetadata:
+            return "Metadata for pagination strategy is invalid"
         }
     }
 }
