@@ -18,6 +18,9 @@ public struct FNLCursorPaginationMetadata: FNLPaginationMetadata {
 
     public func nextQueryItems() -> [URLQueryItem]? {
         guard let cursor = nextCursor else { return nil }
-        return [URLQueryItem(name: "cursor", value: cursor)]
+        return [
+            .init(name: "cursor", value: cursor),
+            .init(name: "per_page", value: "\(perPage)")
+        ]
     }
 }
