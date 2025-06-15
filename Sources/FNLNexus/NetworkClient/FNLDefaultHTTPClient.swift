@@ -58,7 +58,7 @@ extension FNLDefaultHTTPClient: FNLHTTPCleint {
             return FNLRawResponse(
                 data: data,
                 urlResponse: validatedResponse,
-                reqeust: request
+                request: request
             )
         } catch {
             throw handleError(error)
@@ -207,7 +207,7 @@ extension FNLDefaultHTTPClient {
     /// - Returns: A publisher that emits either a transformed result of type `T` or a `FNLRequestError`.
     private func performCombineRequest<T>(
         for endpoint: FNLEndpoint,
-        trasform: @escaping (Data) throws -> T
+        transform: @escaping (Data) throws -> T
     ) -> AnyPublisher<T, FNLRequestError> {
         do {
             let request = try buildRequest(from: endpoint)
@@ -215,7 +215,7 @@ extension FNLDefaultHTTPClient {
                 .tryMap { [weak self] data, response in
                     guard let self else { throw FNLRequestError.unknown("Self deallocated") }
                     _ = try self.validateResponse(response)
-                    return try trasform(data)
+                    return try transform(data)
                 }
                 .mapError { [weak self] in
                     self?.handleError($0) ?? .unknown($0.localizedDescription)

@@ -34,11 +34,11 @@ public struct FNLRawResponse {
     public init(
         data: Data,
         urlResponse: HTTPURLResponse,
-        reqeust: URLRequest? = nil
+        request: URLRequest? = nil
     ) {
         self.data = data
         self.urlResponse = urlResponse
-        self.reqeust = reqeust
+        self.reqeust = request
     }
     
     /// Decodes the raw response data into a strongly typed model using a `JSONDecoder`.
