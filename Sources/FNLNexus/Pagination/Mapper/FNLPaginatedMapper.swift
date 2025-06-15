@@ -11,9 +11,13 @@ import Foundation
 public protocol FNLPaginatedMapper: FNLMappable {
     associatedtype PageMetadata: FNLPaginationMetadata
 
-    /// Current page's metadata
-    var metadata: PageMetadata { get }
-
     /// Maps a raw input into a page of outputs and new metadata.
-    func mapPage(_ input: Input) async throws -> ([Output], PageMetadata)
+    func mapPage(_ input: Input) async throws -> (Output, PageMetadata)
+}
+
+extension FNLPaginatedMapper {
+    public func map(_ input: Input) async throws -> Output {
+        let (items, _) = try await mapPage(input)
+        return items
+    }
 }
