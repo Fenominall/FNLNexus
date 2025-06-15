@@ -13,12 +13,6 @@ public struct FNLPagePaginationMetadata: FNLPaginationMetadata {
     let perPage: Int
     let totalPages: Int?
     
-    public init(currentPage: Int, perPage: Int, totalPages: Int?) {
-        self.currentPage = currentPage
-        self.perPage = perPage
-        self.totalPages = totalPages
-    }
-    
     public var hasMorePages: Bool {
         guard let totalPages else { return true }
         return currentPage < totalPages
