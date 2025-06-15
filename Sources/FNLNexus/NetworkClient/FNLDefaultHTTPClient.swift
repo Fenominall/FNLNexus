@@ -43,7 +43,7 @@ final class FNLDefaultHTTPClient {
 
 // MARK: - FNLHTTPClient
 
-extension FNLDefaultHTTPClient: FNLHTTPCleint {
+extension FNLDefaultHTTPClient: FNLHTTPClient {
     /// Sends a raw HTTP request using the provided endpoint.
     ///
     /// - Parameter endpoint: The endpoint that defines the request.
