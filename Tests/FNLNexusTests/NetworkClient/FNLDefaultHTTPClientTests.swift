@@ -7,7 +7,7 @@
 
 import Foundation
 import XCTest
-import FNLNexus
+@testable import FNLNexus
 
 final class FNLDefaultHTTPClientTests: XCTestCase {
     // MARK: - Setup
@@ -19,7 +19,7 @@ final class FNLDefaultHTTPClientTests: XCTestCase {
     
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #filePath,
-                         line: UInt = #line) -> FNLHTTPCleint {
+                         line: UInt = #line) -> FNLHTTPClient {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [URLProtocolStub.self]
         let session = URLSession(configuration: configuration)
