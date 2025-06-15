@@ -10,20 +10,18 @@ import Foundation
 /// Metadata for keyset-based pagination using an `after_id` marker.
 public struct FNLKeysetPaginationMetadata: FNLPaginationMetadata {
     public let lastSeenId: String?
-    public let hasMore: Bool
+    public let perPage: Int
 
-    public init(lastSeenId: String? = nil, hasMore: Bool) {
-        self.lastSeenId = lastSeenId
-        self.hasMore = hasMore
-    }
-    
     public var hasMorePages: Bool {
-        return hasMore
+        return lastSeenId != nil
     }
 
     public func nextQueryItems() -> [URLQueryItem]? {
         guard let id = lastSeenId else { return nil }
-        return [URLQueryItem(name: "after_id", value: id)]
+        return [
+            .init(name: "after_id", value: id),
+            .init(name: "per_page", value: "\(perPage)")
+        ]
     }
 }
 
