@@ -8,7 +8,7 @@
 import Foundation
 
 /// A utility for safely extracting typed query values from a list of URLQueryItem.
-public struct DeepLinkQueryItems {
+public struct FNLDeepLinkQueryItems {
     private let items: [URLQueryItem]
     
     public init(items: [URLQueryItem]) {
