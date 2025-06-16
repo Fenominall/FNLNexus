@@ -7,11 +7,11 @@
 
 import Foundation
 
-public protocol DeepLinkHandlingService: Sendable {
+public protocol FNLDeepLinkHandlingService: Sendable {
     func handle(deepLinkUrl: URL) async -> FNLDeepLinkHandlingResult
 }
 
-public final class DeepLinkHandlingServiceManager: DeepLinkHandlingService {
+public final class FNLDeepLinkHandlingServiceManager: FNLDeepLinkHandlingService {
     private let registry: FNLDeepLinkRegistry
     private let dependencies: FNLDeepLinkHandlerDependencies
     private let container: FNLDependencyContainer
