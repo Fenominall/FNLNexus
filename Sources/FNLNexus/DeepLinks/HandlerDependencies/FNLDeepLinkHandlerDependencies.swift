@@ -9,15 +9,15 @@ import Foundation
 
 /// A container for UI-related services passed to handlers:
 public struct FNLDeepLinkHandlerDependencies: Sendable {
-    public let messageDisplayable: MessageDisplayable
-    public let activityDisplayable: ActivityDisplayable
-    public let contentReloadable: ContentReloadable
+    public let messageDisplayable: FNLMessageDisplayable
+    public let activityDisplayable: FNLActivityDisplayable
+    public let contentReloadable: FNLContentReloadable
     public let completionHandler: DeepLinkCompletionHandler
     
     public init(
-        messageDisplayable: MessageDisplayable,
-        activityDisplayable: ActivityDisplayable,
-        contentReloadable: ContentReloadable,
+        messageDisplayable: FNLMessageDisplayable,
+        activityDisplayable: FNLActivityDisplayable,
+        contentReloadable: FNLContentReloadable,
         completionHandler: DeepLinkCompletionHandler
     ) {
         self.messageDisplayable = messageDisplayable
