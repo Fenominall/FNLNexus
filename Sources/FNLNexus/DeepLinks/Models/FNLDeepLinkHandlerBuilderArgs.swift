@@ -20,10 +20,3 @@ public struct FNLDeepLinkHandlerBuilderArgs<D: FNLDeepLink> {
     }
 }
 
-public protocol DeepLinksRegisterHelper: Actor {
-    func register<D: FNLDeepLink>(
-        path: String,
-        builder: @escaping (FNLDeepLinkQueryItems) throws -> D,
-        handler: @escaping (FNLDeepLinkHandlerBuilderArgs<D>) -> some FNLDeepLinkHandler
-    )
-}

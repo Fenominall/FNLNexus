@@ -12,13 +12,13 @@ public struct FNLDeepLinkHandlerDependencies: Sendable {
     public let messageDisplayable: FNLMessageDisplayable
     public let activityDisplayable: FNLActivityDisplayable
     public let contentReloadable: FNLContentReloadable
-    public let completionHandler: DeepLinkCompletionHandler
+    public let completionHandler: FNLDeepLinkCompletionHandler
     
     public init(
         messageDisplayable: FNLMessageDisplayable,
         activityDisplayable: FNLActivityDisplayable,
         contentReloadable: FNLContentReloadable,
-        completionHandler: DeepLinkCompletionHandler
+        completionHandler: FNLDeepLinkCompletionHandler
     ) {
         self.messageDisplayable = messageDisplayable
         self.activityDisplayable = activityDisplayable
