@@ -9,7 +9,7 @@ import Foundation
 
 /// Parses a URL into its path, query parameters, scheme, etc.
 /// Used for resolving registered handlers.
-public struct DeepLinkURI: Sendable {
+public struct FNLDeepLinkURI: Sendable {
     public let url: URL
     public let scheme: String?
     public let host: String?

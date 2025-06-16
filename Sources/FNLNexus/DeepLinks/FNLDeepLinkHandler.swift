@@ -8,6 +8,7 @@
 import Foundation
 
 /// Handles the behavior for a given deep link. Can throw and supports async operations.
-public protocol DeepLinkHandler: Sendable {
+public protocol FNLDeepLinkHandler: Sendable {
     func handle() async throws
 }
+

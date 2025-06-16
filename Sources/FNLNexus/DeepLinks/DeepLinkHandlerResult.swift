@@ -8,7 +8,7 @@
 import Foundation
 
 /// Indicates the result of a deep link handling attempt.
-public enum DeepLinkHandlingResult: Sendable {
+public enum FNLDeepLinkHandlingResult: Sendable {
     case success
     case failure(Error)
     case cancelled
