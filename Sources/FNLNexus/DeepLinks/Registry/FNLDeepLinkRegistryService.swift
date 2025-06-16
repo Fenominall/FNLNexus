@@ -7,28 +7,22 @@
 
 import Foundation
 
-/// Used by features/modules to register their handlers.
-/// Call registerDeepLinkHandlers(using:) during app startup.
-public protocol FNLDeepLinkHandlerRegister {
-    func registerDeepLinkHandlers(using helper: DeepLinksRegisterHelper)
-}
-
-public actor FNLDeepLinkRegistry: DeepLinksRegisterHelper, Sendable {
+public actor FNLDeepLinkRegistryService: FNLDeepLinksRegisterHelper, Sendable {
     private var handlers: [String: (FNLDeepLinkContext) async throws -> (any FNLDeepLink, any FNLDeepLinkHandler)?] = [:]
 
     public init() {}
 
-    public func register<D: FNLDeepLink>(
+    public func register<D>(
         path: String,
         builder: @escaping (FNLDeepLinkQueryItems) throws -> D,
-        handler: @escaping (FNLDeepLinkHandlerBuilderArgs<D>) -> some FNLDeepLinkHandler
-    ) {
+        handler: @escaping (FNLDeepLinkHandlerBuilderArgs<D>) throws -> some FNLDeepLinkHandler
+    ) where D: FNLDeepLink {
         handlers[path] = { context in
             let (uri, dependencies, container) = context
             let query = FNLDeepLinkQueryItems(items: uri.queryItems)
             let deepLink = try builder(query)
             let args = FNLDeepLinkHandlerBuilderArgs(deepLink: deepLink, dependencies: dependencies, container: container)
-            let builtHandler = handler(args)
+            let builtHandler = try handler(args)
             return (deepLink, builtHandler)
         }
     }
