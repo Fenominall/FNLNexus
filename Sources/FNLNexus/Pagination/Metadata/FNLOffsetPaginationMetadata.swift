@@ -9,9 +9,19 @@ import Foundation
 
 /// Metadata for traditional offset-based pagination.
 public struct FNLOffsetPaginationMetadata: FNLPaginationMetadata {
-    public let currentOffset: Int
-    public let limit: Int
-    public let totalCount: Int
+    private let currentOffset: Int
+    private let limit: Int
+    private let totalCount: Int
+    
+    public init(
+        currentOffset: Int,
+        limit: Int,
+        totalCount: Int
+    ) {
+        self.currentOffset = currentOffset
+        self.limit = limit
+        self.totalCount = totalCount
+    }
     
     public var hasMorePages: Bool {
         return currentOffset + limit < totalCount

@@ -9,8 +9,13 @@ import Foundation
 
 /// Metadata for keyset-based pagination using an `after_id` marker.
 public struct FNLKeysetPaginationMetadata: FNLPaginationMetadata {
-    public let lastSeenId: String?
-    public let perPage: Int
+    private let lastSeenId: String?
+    private let perPage: Int
+    
+    public init(lastSeenId: String?, perPage: Int) {
+        self.lastSeenId = lastSeenId
+        self.perPage = perPage
+    }
 
     public var hasMorePages: Bool {
         return lastSeenId != nil

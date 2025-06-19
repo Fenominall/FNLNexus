@@ -9,8 +9,13 @@ import Foundation
 
 /// Metadata for cursor-based pagination using a cursor token.
 public struct FNLCursorPaginationMetadata: FNLPaginationMetadata {
-    public let nextCursor: String?
-    public let perPage: Int
+    private let nextCursor: String?
+    private let perPage: Int
+    
+    public init(nextCursor: String?, perPage: Int) {
+        self.nextCursor = nextCursor
+        self.perPage = perPage
+    }
     
     public var hasMorePages: Bool {
         return nextCursor != nil

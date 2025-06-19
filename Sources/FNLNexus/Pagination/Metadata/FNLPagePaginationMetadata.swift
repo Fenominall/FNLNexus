@@ -9,9 +9,19 @@ import Foundation
 
 /// Metadata for  page-based pagination.
 public struct FNLPagePaginationMetadata: FNLPaginationMetadata {
-    let currentPage: Int
-    let perPage: Int
-    let totalPages: Int?
+    private let currentPage: Int
+    private let perPage: Int
+    private let totalPages: Int?
+    
+    public init(
+        currentPage: Int,
+        perPage: Int,
+        totalPages: Int?
+    ) {
+        self.currentPage = currentPage
+        self.perPage = perPage
+        self.totalPages = totalPages
+    }
     
     public var hasMorePages: Bool {
         guard let totalPages else { return true }
