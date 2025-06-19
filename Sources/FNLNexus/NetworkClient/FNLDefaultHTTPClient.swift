@@ -16,13 +16,13 @@ import Combine
 final class FNLDefaultHTTPClient {
     
     /// The URL session used to perform network requests.
-    public let session: URLSession
+    private let session: URLSession
     
     /// The request builder responsible for converting `FNLEndpoint` to `URLRequest`.
-    public let requestBuilder: FNLRequestBuildable
+    private let requestBuilder: FNLRequestBuildable
     
     /// The decoder used to parse data responses into strongly typed models.
-    public let decoder: FNLDataDecoder
+    private let decoder: FNLDataDecoder
     
     /// Initializes a new `FNLDefaultURLSessionHTTPClient`.
     ///
