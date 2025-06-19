@@ -14,10 +14,14 @@ import Foundation
 /// needs to process the raw `Data` payload from an HTTP response, especially
 /// when that data is expected to be `Codable`.
 public struct FNLCodableRawResponse: Codable, Sendable {
-    public let data: Data
+    private let data: Data
     
     public init(data: Data) {
         self.data = data
+    }
+    
+    public var inputData: Data {
+        get { data }
     }
     
     public func decode<T: Decodable>(as type: T.Type, using decoder: JSONDecoder = .init()) async throws -> T {

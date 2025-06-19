@@ -14,8 +14,8 @@ public struct FNLDefaultPaginationMapper<Item: Decodable, Metadata: Decodable & 
     public typealias Output = [Item]
 
     public func mapPage(_ input: FNLCodableRawResponse) async throws -> (Output, Metadata) {
-        let items = try JSONDecoder().decode([Item].self, from: input.data)
-        let metadata = try JSONDecoder().decode(Metadata.self, from: input.data)
+        let items = try JSONDecoder().decode([Item].self, from: input.inputData)
+        let metadata = try JSONDecoder().decode(Metadata.self, from: input.inputData)
         return (items, metadata)
     }
 }

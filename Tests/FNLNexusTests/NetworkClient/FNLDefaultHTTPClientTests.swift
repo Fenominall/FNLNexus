@@ -40,7 +40,7 @@ final class FNLDefaultHTTPClientTests: XCTestCase {
     ) async -> (data: Data, response: HTTPURLResponse)? {
         do {
             let result = try await resultFor(values, file: file, line: line)
-            return (result.data, result.urlResponse)
+            return (result.bodyData, result.origionalUrlResponse)
         } catch {
             XCTFail("Expected success, but got \(error) instead", file: file, line: line)
             return nil

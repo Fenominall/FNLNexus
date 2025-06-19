@@ -168,7 +168,7 @@ public extension FNLHTTPClient {
             let rawResponse = try await self.sendRequest(pageEndpoint)
             
             // Wrap the raw data into a Codable response for the mapper.
-            let codableInput = FNLCodableRawResponse(data: rawResponse.data)
+            let codableInput = FNLCodableRawResponse(data: rawResponse.bodyData)
             
             // Use the mapper to decode the items and the page-specific metadata from the response.
             let (items, decodedMetadata) = try await mapper.mapPage(codableInput)

@@ -17,13 +17,13 @@ import Foundation
 public struct FNLRawResponse {
     
     /// The raw body data returned by the server.
-    public let data: Data
+    private let data: Data
     
     /// The HTTP response received from the server, including status code and headers.
-    public let urlResponse: HTTPURLResponse
+    private let urlResponse: HTTPURLResponse
     
     /// The original URL request that initiated the network call. Useful for debugging or retry logic.
-    public let reqeust: URLRequest?
+    private let reqeust: URLRequest?
     
     /// Initializes a new instance of `FNLRawResponse`.
     ///
@@ -69,5 +69,17 @@ public struct FNLRawResponse {
     /// All HTTP header fields returned in the response.
     public var headers: [AnyHashable: Any] {
         urlResponse.allHeaderFields
+    }
+    
+    public var bodyData: Data {
+        data
+    }
+    
+    public var origionalUrlResponse: HTTPURLResponse {
+        urlResponse
+    }
+    
+    public var origionalRequest: URLRequest? {
+        reqeust
     }
 }
