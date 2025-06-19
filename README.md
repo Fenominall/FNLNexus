@@ -1,6 +1,6 @@
 # FNLNexus
 
-A modern Swift networking library with async/await, custom request builder, pagination, and circuit breaker support adopted to Swift 6.
+A modern Swift networking library with support of Swift Concurrency, custom request builder, pagination strategies, and circuit breaker support adopted to Swift 6.
 
 ## Features
 
@@ -9,3 +9,7 @@ A modern Swift networking library with async/await, custom request builder, pagi
 - Built-in pagination strategies
 - Circuit breaker pattern for fault tolerance
 - Lightweight and modular design
+
+- DeepLinks:
+
+To be continued... In development process...
