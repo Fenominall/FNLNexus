@@ -24,9 +24,9 @@ public actor FNLCircuitBreaker {
     }
     
     // MARK: - Configuration
-    public let failureThreshold: Int
-    public let recoveryTimeout: TimeInterval
-    public let halfOpenSuccessThreshold: Int
+    private let failureThreshold: Int
+    private let recoveryTimeout: TimeInterval
+    private let halfOpenSuccessThreshold: Int
     
     // MARK: - Internal State (Protected by Actor)
     public private(set) var state: State = .closed
