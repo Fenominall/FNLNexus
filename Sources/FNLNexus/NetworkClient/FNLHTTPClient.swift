@@ -127,7 +127,7 @@ public extension FNLAsyncHTTPClient {
 
 // MARK: - FNLHTTPCleint Load Paginated
 /// An extension on `FNLHTTPClient` providing a convenient method for loading paginated data.
-public extension FNLHTTPClient { // Corrected FNLHTTPCleint to FNLHTTPClient
+public extension FNLHTTPClient {
     /// Loads paginated data from a specified endpoint using a provided pagination configuration.
     ///
     /// This method orchestrates the fetching of paginated data by combining
